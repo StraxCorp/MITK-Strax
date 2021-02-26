@@ -6,38 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>139</width>
-    <height>143</height>
+    <width>147</width>
+    <height>155</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QmitkDataSelectionWidget" name="dataSelectionWidget" native="true"/>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>Masking Mode</string>
+    <widget class="QmitkDataSelectionWidget" name="dataSelectionWidget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QRadioButton" name="rbMaskImage">
-        <property name="text">
-         <string>Image Masking</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="rbMaskSurface">
-        <property name="text">
-         <string>Surface Masking</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
    </item>
    <item>
@@ -55,7 +36,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>273</height>
+       <height>40</height>
       </size>
      </property>
     </spacer>
@@ -67,6 +48,7 @@
    <class>QmitkDataSelectionWidget</class>
    <extends>QWidget</extends>
    <header>internal/Common/QmitkDataSelectionWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

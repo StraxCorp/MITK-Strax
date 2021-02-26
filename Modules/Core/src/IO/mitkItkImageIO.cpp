@@ -244,7 +244,19 @@ namespace mitk
     const auto maxTimePoints = timeGeometry->CountTimeSteps();
     for (TimeStepType pos = 0; pos < maxTimePoints; ++pos)
     {
-      stream << " " << timeGeometry->GetTimeBounds(pos)[1];
+      auto timeBounds = timeGeometry->GetTimeBounds(pos);
+
+      ///////////////////////////////////////
+      // Workarround T27883. See https://phabricator.mitk.org/T27883#219473 for more details.
+      // This workarround should be removed as soon as T28262 is solved!
+      if (pos + 1 == maxTimePoints && timeBounds[0]==timeBounds[1])
+      {
+        timeBounds[1] = timeBounds[0] + 1.;
+      }
+      // End of workarround for T27883
+      //////////////////////////////////////
+
+      stream << " " << timeBounds[1];
     }
     auto result = itk::MetaDataObject<std::string>::New();
     result->SetMetaDataObjectValue(stream.str());
@@ -659,7 +671,19 @@ namespace mitk
           continue;
         }
 
-        std::string value = infoList.front()->GetSerializationFunction()(property.second);
+        std::string value = mitk::BaseProperty::VALUE_CANNOT_BE_CONVERTED_TO_STRING;
+        try
+        {
+          value = infoList.front()->GetSerializationFunction()(property.second);
+        }
+        catch (const std::exception& e)
+        {
+          MITK_ERROR << "Error when serializing content of property. This often indicates the use of an out dated reader. Property will not be stored. Skipped property: " << property.first << ". Reason: " << e.what();
+        }
+        catch (...)
+        {
+          MITK_ERROR << "Unkown error when serializing content of property. This often indicates the use of an out dated reader. Property will not be stored. Skipped property: " << property.first;
+        }
 
         if (value == mitk::BaseProperty::VALUE_CANNOT_BE_CONVERTED_TO_STRING)
         {

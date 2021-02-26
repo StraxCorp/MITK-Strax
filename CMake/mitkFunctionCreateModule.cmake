@@ -11,7 +11,7 @@
 #!     DEPENDS PUBLIC MitkCore
 #!     PACKAGE_DEPENDS
 #!       PRIVATE Qt5|Xml+Networking
-#!       PUBLIC  ITK|Watershed
+#!       PUBLIC  ITK|Watersheds
 #! \endcode
 #!
 #! The <moduleName> parameter specifies the name of the module which is used
@@ -116,7 +116,7 @@ function(mitk_create_module)
       DEPENDS                # list of modules this module depends on: [PUBLIC|PRIVATE|INTERFACE] <list>
       DEPENDS_INTERNAL       # list of modules this module internally depends on (DEPRECATED)
       PACKAGE_DEPENDS        # list of "packages this module depends on (e.g. Qt, VTK, etc.): [PUBLIC|PRIVATE|INTERFACE] <package-list>
-      TARGET_DEPENDS         # list of CMake targets this module should depend on
+      TARGET_DEPENDS         # list of CMake targets this module should depend on: [PUBLIC|PRIVATE|INTERFACE] <list>
       ADDITIONAL_LIBS        # list of addidtional private libraries linked to this module.
       CPP_FILES              # list of cpp files
       H_FILES                # list of header files: [PUBLIC|PRIVATE] <list>
@@ -150,7 +150,7 @@ function(mitk_create_module)
     endif()
   endif()
 
-  set(_deprecated_args INTERNAL_INCLUDE_DIRS DEPENDS_INTERNAL EXPORT_DEFINE TARGET_DEPENDS HEADERS_ONLY)
+  set(_deprecated_args INTERNAL_INCLUDE_DIRS DEPENDS_INTERNAL EXPORT_DEFINE HEADERS_ONLY)
   foreach(_deprecated_arg ${_deprecated_args})
     if(MODULE_${_deprecated_arg})
       message(WARNING "The ${_deprecated_arg} argument is deprecated")
@@ -446,9 +446,14 @@ function(mitk_create_module)
       # set_property(TARGET ${MODULE_TARGET} PROPERTY FOLDER "${MITK_ROOT_FOLDER}/Modules")
     else()
       if(MODULE_EXECUTABLE)
-        add_executable(${MODULE_TARGET}
+        if(MITK_SHOW_CONSOLE_WINDOW)
+          set(_SHOW_CONSOLE_OPTION "")
+        else()
+          set(_SHOW_CONSOLE_OPTION WIN32)
+        endif()
+        add_executable(${MODULE_TARGET} ${_SHOW_CONSOLE_OPTION}
                        ${MODULE_CPP_FILES} ${coverage_sources} ${CPP_FILES_GENERATED} ${Q${KITNAME}_GENERATED_CPP}
-                       ${DOX_FILES} ${UI_FILES} ${QRC_FILES})
+                       ${DOX_FILES} ${UI_FILES} ${QRC_FILES} ${WINDOWS_ICON_RESOURCE_FILE})
         set_property(TARGET ${MODULE_TARGET} PROPERTY FOLDER "${MITK_ROOT_FOLDER}/Modules/Executables")
         set(_us_module_name main)
       else()
@@ -587,7 +592,7 @@ function(mitk_create_module)
     endif()
 
     if(MODULE_TARGET_DEPENDS)
-      add_dependencies(${MODULE_TARGET} ${MODULE_TARGET_DEPENDS})
+      target_link_libraries(${MODULE_TARGET} ${MODULE_TARGET_DEPENDS})
     endif()
 
     set(DEPENDS "${MODULE_DEPENDS}")

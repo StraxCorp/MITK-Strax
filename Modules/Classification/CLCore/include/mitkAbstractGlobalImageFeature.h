@@ -72,7 +72,7 @@ namespace mitk
   * If the image values are used for the initializiation of the histogram, it can be defined
   * whether the whole image is used or only the masked areas to find minima and maxima. This is
   * done by the option <b>SetIgnoreMask</b> or the corrsponding options
-  * <b>-NAME::ignore-mask-for-histogram</b> and <b>-ignore-mask-for-histogram</b>. If these are
+  * <b>-%NAME::ignore-mask-for-histogram</b> and <b>-ignore-mask-for-histogram</b>. If these are
   * true, the whole image is used for the calculation.
   *
   * Depending on the passed arguments, different initialization methods are used. The initialization
@@ -122,19 +122,19 @@ namespace mitk
   *
   * The maximum intensity can be set by different command line parameters: global for all filters that use histograms
   * by <b>-minimum-intensity</b> and <b>-minimum</b>. Alternative it can be set only for this filter by
-  * <b>-NAME::minimum</b> and <b>-NAME::min</b>.
+  * <b>-%NAME::minimum</b> and <b>-%NAME::min</b>.
   *
   * The minimum intensity can be set by different command line parameters: global for all filters that use histograms
   * by <b>-maximum-intensity</b> and <b>-maximum</b>. Alternative it can be set only for this filter by
-  * <b>\NAME::maximum</b> and <b>NAME::max</b>.
+  * <b>-%NAME::maximum</b> and <b>-%NAME::max</b>.
   *
   * The binsize can be set by different command line parameters: global for all filters that use histograms
   * by <b>-binsize</b>. Alternative it can be set only for this filter by
-  * <b>\NAME::binsize</b>.
+  * <b>-%NAME::binsize</b>.
   *
   * The number of bins can be set by different command line parameters: global for all filters that use histograms
   * by <b>-bins</b>. Alternative it can be set only for this filter by
-  * <b>\NAME::bins</b>.
+  * <b>-%NAME::bins</b>.
 
 
   * ### Note to the developers ###
@@ -174,10 +174,14 @@ public:
 
   /**
   * \brief Calculates the feature of this abstact interface. Does not necessarily considers the parameter settings.
+  * @param image
+  * @param mask
+  * @param maskNoNaN
+  * @param featureList
   * @param checkParameterActivation Indicates if the features should only be calculated and added if the FeatureClass is activated in the parameters.
   * True: only append if activated in the parametes. False: always and append it.
   */
-  void CalculateAndAppendFeatures(const Image* image, const Image* mask, const Image* maskNoNAN, FeatureListType &featureList, bool checkParameterActivation = true);
+  void CalculateAndAppendFeatures(const Image* image, const Image* mask, const Image* maskNoNaN, FeatureListType &featureList, bool checkParameterActivation = true);
 
   itkSetMacro(Prefix, std::string);
   itkSetMacro(ShortName, std::string);
@@ -275,7 +279,7 @@ protected:
   FeatureID CreateTemplateFeatureID(std::string settingsSuffix = "", FeatureID::ParametersType additionalParams = {});
 
   /** Helper that generates the legacy feature names for a passed FeatureID.
-  * Format of the legacy feature name is: <ClassName>::[<LegacyFeatureEncoding>::]<LegacyFeatureNamePart>
+  * Format of the legacy feature name is: \<ClassName\>::[\<LegacyFeatureEncoding\>::]\<LegacyFeatureNamePart\>
   * Overwrite GenerateLegacyFeatureNamePart and GenerateLegacyFeatureEncoding to change behavior in
   * derived classes.
   */

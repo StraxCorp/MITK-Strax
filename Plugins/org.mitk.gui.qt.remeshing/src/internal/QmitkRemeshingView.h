@@ -15,13 +15,19 @@ found in the LICENSE file.
 
 #include <QmitkAbstractView.h>
 #include <QmitkSingleNodeSelectionWidget.h>
-#include <ui_QmitkRemeshingViewControls.h>
+
+namespace Ui
+{
+  class QmitkRemeshingViewControls;
+}
 
 class QmitkRemeshingView : public QmitkAbstractView
 {
   Q_OBJECT
 
 public:
+  static const std::string VIEW_ID;
+
   QmitkRemeshingView();
   ~QmitkRemeshingView() override;
 
@@ -29,15 +35,15 @@ public:
   void SetFocus() override;
 
 private slots:
-  void OnSelectedSurfaceChanged(const QmitkSingleNodeSelectionWidget::NodeList& nodes);
-  void OnDensityChanged(int numVertices);
-  void OnRemeshButtonClicked();
+  void OnSurfaceChanged(const QmitkSingleNodeSelectionWidget::NodeList& nodes);
+  void OnVertexCountChanged(int vertexCount);
+  void OnCalculateNormalsChanged(int checkState);
+  void OnDecimateButtonClicked();
 
 private:
   void EnableWidgets(bool enable);
 
-  Ui::QmitkRemeshingViewControls m_Controls;
-  int m_MaxNumberOfVertices;
+  Ui::QmitkRemeshingViewControls* m_Controls;
 };
 
 #endif

@@ -15,7 +15,7 @@ if(MITK_USE_CTK)
 
   if(NOT DEFINED CTK_DIR)
 
-    set(revision_tag "78341aba")
+    set(revision_tag "7210c5bc")
 
     set(ctk_optional_cache_args )
     if(MITK_USE_Python3)
@@ -66,7 +66,6 @@ if(MITK_USE_CTK)
         -DCMAKE_DEBUG_POSTFIX:STRING=
         -DCTK_QT_VERSION:STRING=5
         -DQt5_DIR=${Qt5_DIR}
-        -DGit_EXECUTABLE:FILEPATH=${GIT_EXECUTABLE}
         -DGIT_EXECUTABLE:FILEPATH=${GIT_EXECUTABLE}
         -DCTK_BUILD_QTDESIGNER_PLUGINS:BOOL=ON
         -DCTK_LIB_CommandLineModules/Backend/LocalProcess:BOOL=ON

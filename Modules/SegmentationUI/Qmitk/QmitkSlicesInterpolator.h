@@ -205,7 +205,7 @@ protected:
     and calls Interpolate to further process this PlaneGeometry into an interpolation.
 
     \param e is a actually a mitk::SliceNavigationController::GeometrySliceEvent, sent by a SliceNavigationController
-    \param slice the SliceNavigationController
+    \param slicer the SliceNavigationController
         */
   bool TranslateAndInterpolateChangedSlice(const itk::EventObject &e, mitk::SliceNavigationController *slicer);
 
@@ -256,7 +256,8 @@ private:
   QPushButton *m_BtnApplyForAllSlices2D;
   QPushButton *m_BtnApply3D;
 
-  QPushButton *m_BtnSuggestPlane;
+  // T28261
+  // QPushButton *m_BtnSuggestPlane;
 
   QCheckBox *m_ChkShowPositionNodes;
   QPushButton *m_BtnReinit3DInterpolation;

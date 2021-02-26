@@ -43,11 +43,11 @@ set(CPP_FILES
   Interactions/mitkContourModelLiveWireInteractor.cpp
   Interactions/mitkLiveWireTool2D.cpp
   Interactions/mitkContourTool.cpp
-  Interactions/mitkCorrectorTool2D.cpp
   Interactions/mitkCreateSurfaceTool.cpp
   Interactions/mitkDrawPaintbrushTool.cpp
   Interactions/mitkErasePaintbrushTool.cpp
   Interactions/mitkEraseRegionTool.cpp
+  Interactions/mitkFastMarchingBaseTool.cpp
   Interactions/mitkFastMarchingTool.cpp
   Interactions/mitkFastMarchingTool3D.cpp
   Interactions/mitkFeedbackContourTool.cpp
@@ -79,8 +79,6 @@ set(CPP_FILES
 set(RESOURCE_FILES
   Add_48x48.png
   Add_Cursor_32x32.png
-  Correction_48x48.png
-  Correction_Cursor_32x32.png
   Erase_48x48.png
   Erase_Cursor_32x32.png
   FastMarching_48x48.png
