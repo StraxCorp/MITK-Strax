@@ -30,6 +30,10 @@ berry::WorkbenchWindowAdvisor*
 QmitkExtAppWorkbenchAdvisor::CreateWorkbenchWindowAdvisor(
         berry::IWorkbenchWindowConfigurer::Pointer configurer)
 {
+  // Make sure the window fits in all screen sizes.
+  // This only works the first time MITK window opens, following time will use previous stored value
+  configurer->SetInitialSize(QPoint(600, 400));
+
   QmitkExtWorkbenchWindowAdvisor* advisor = new
     QmitkExtWorkbenchWindowAdvisor(this, configurer);
 

@@ -620,19 +620,22 @@ void QmitkExtWorkbenchWindowAdvisor::PostWindowCreate()
 
   if (!USE_EXPERIMENTAL_COMMAND_CONTRIBUTIONS)
   {
-    QMenu* fileMenu = menuBar->addMenu("&File");
-    fileMenu->setObjectName("FileMenu");
-    fileMenu->addAction(fileOpenAction);
-    fileMenu->addAction(fileSaveAction);
-    fileMenu->addAction(fileSaveProjectAction);
-    fileMenu->addAction(closeProjectAction);
-    fileMenu->addSeparator();
+    if (showFileMenu)
+    {
+      QMenu *fileMenu = menuBar->addMenu("&File");
+      fileMenu->setObjectName("FileMenu");
+      fileMenu->addAction(fileOpenAction);
+      fileMenu->addAction(fileSaveAction);
+      fileMenu->addAction(fileSaveProjectAction);
+      fileMenu->addAction(closeProjectAction);
+      fileMenu->addSeparator();
 
-    QAction* fileExitAction = new QmitkFileExitAction(window);
-    fileExitAction->setIcon(berry::QtStyleManager::ThemeIcon(basePath + "system-log-out.svg"));
-    fileExitAction->setShortcut(QKeySequence::Quit);
-    fileExitAction->setObjectName("QmitkFileExitAction");
-    fileMenu->addAction(fileExitAction);
+      QAction *fileExitAction = new QmitkFileExitAction(window);
+      fileExitAction->setIcon(berry::QtStyleManager::ThemeIcon(basePath + "system-log-out.svg"));
+      fileExitAction->setShortcut(QKeySequence::Quit);
+      fileExitAction->setObjectName("QmitkFileExitAction");
+      fileMenu->addAction(fileExitAction);
+    }
 
     // another bad hack to get an edit/undo menu...
     QMenu* editMenu = menuBar->addMenu("&Edit");
@@ -670,10 +673,14 @@ void QmitkExtWorkbenchWindowAdvisor::PostWindowCreate()
     if(showClosePerspectiveMenuItem)
       closePerspAction = windowMenu->addAction("&Close Perspective", QmitkExtWorkbenchWindowAdvisorHack::undohack, SLOT(onClosePerspective()));
 
-    windowMenu->addSeparator();
-    windowMenu->addAction("&Preferences...",
-      QmitkExtWorkbenchWindowAdvisorHack::undohack, SLOT(onEditPreferences()),
-      QKeySequence("CTRL+P"));
+    if (showPreferencesMenu)
+    {
+      windowMenu->addSeparator();
+      windowMenu->addAction("&Preferences...",
+                            QmitkExtWorkbenchWindowAdvisorHack::undohack,
+                            SLOT(onEditPreferences()),
+                            QKeySequence("CTRL+P"));
+    }
 
     // fill perspective menu
     berry::IPerspectiveRegistry* perspRegistry =
@@ -801,22 +808,31 @@ void QmitkExtWorkbenchWindowAdvisor::PostWindowCreate()
     viewNavigatorAction->setToolTip("Toggle View Navigator");
   }
 
-  mainActionsToolBar->addAction(fileOpenAction);
-  mainActionsToolBar->addAction(fileSaveProjectAction);
-  mainActionsToolBar->addAction(closeProjectAction);
+  if (showFileOpenAction)
+    mainActionsToolBar->addAction(fileOpenAction);
+  if (showSaveProjectAction)
+    mainActionsToolBar->addAction(fileSaveProjectAction);
+  if (showCloseProjectAction)
+    mainActionsToolBar->addAction(closeProjectAction);
   mainActionsToolBar->addAction(undoAction);
   mainActionsToolBar->addAction(redoAction);
-  if(this->GetWindowConfigurer()->GetWindow()->GetWorkbench()->GetEditorRegistry()->FindEditor("org.mitk.editors.dicombrowser"))
+  if (showEditorAction)
   {
-    mainActionsToolBar->addAction(openDicomEditorAction);
-  }
-  if (this->GetWindowConfigurer()->GetWindow()->GetWorkbench()->GetEditorRegistry()->FindEditor("org.mitk.editors.stdmultiwidget"))
-  {
-    mainActionsToolBar->addAction(openStdMultiWidgetEditorAction);
-  }
-  if (this->GetWindowConfigurer()->GetWindow()->GetWorkbench()->GetEditorRegistry()->FindEditor("org.mitk.editors.mxnmultiwidget"))
-  {
-    mainActionsToolBar->addAction(openMxNMultiWidgetEditorAction);
+    if (this->GetWindowConfigurer()->GetWindow()->GetWorkbench()->GetEditorRegistry()->FindEditor(
+          "org.mitk.editors.dicombrowser"))
+    {
+      mainActionsToolBar->addAction(openDicomEditorAction);
+    }
+    if (this->GetWindowConfigurer()->GetWindow()->GetWorkbench()->GetEditorRegistry()->FindEditor(
+          "org.mitk.editors.stdmultiwidget"))
+    {
+      mainActionsToolBar->addAction(openStdMultiWidgetEditorAction);
+    }
+    if (this->GetWindowConfigurer()->GetWindow()->GetWorkbench()->GetEditorRegistry()->FindEditor(
+          "org.mitk.editors.mxnmultiwidget"))
+    {
+      mainActionsToolBar->addAction(openMxNMultiWidgetEditorAction);
+    }
   }
 
   if (imageNavigatorViewFound)
