@@ -172,6 +172,15 @@ private:
   QAction* openDicomEditorAction;
   QAction* openStdMultiWidgetEditorAction;
   QAction* openMxNMultiWidgetEditorAction;
+
+  // CustomUI
+private:
+  bool showFileMenu = false;
+  bool showPreferencesMenu = false;
+  bool showFileOpenAction = false;
+  bool showSaveProjectAction = false;
+  bool showCloseProjectAction = false;
+  bool showEditorAction = false;
 };
 
 #endif /*QMITKEXTWORKBENCHWINDOWADVISOR_H_*/

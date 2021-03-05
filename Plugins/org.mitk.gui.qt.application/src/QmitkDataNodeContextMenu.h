@@ -131,6 +131,11 @@ private:
   QmitkDataNodeSurfaceRepresentationAction* m_SurfaceRepresentationAction;
 
   bool m_SurfaceDecimation;
+
+  // CustomUI
+private:
+  bool showSaveAction = false;
+  bool showTextInterpolationAction = false;
 };
 
 #endif // QMITKDATANODECONTEXTMENU_H

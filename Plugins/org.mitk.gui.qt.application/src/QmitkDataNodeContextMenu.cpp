@@ -51,7 +51,7 @@ void QmitkDataNodeContextMenu::SetDataStorage(mitk::DataStorage* dataStorage)
 
     if (nullptr != dataNodeAction)
       dataNodeAction->SetDataStorage(dataStorage);
-  }  
+  }
 }
 
 void QmitkDataNodeContextMenu::SetBaseRenderer(mitk::BaseRenderer* baseRenderer)
@@ -117,9 +117,13 @@ void QmitkDataNodeContextMenu::InitDefaultActions()
   m_UnknownDataNodeDescriptor->AddAction(m_ReinitAction, true);
   m_DescriptorActionList.push_back(std::make_pair(m_UnknownDataNodeDescriptor, m_ReinitAction));
 
-  QAction* saveAction = new QmitkFileSaveAction(QIcon(":/org.mitk.gui.qt.datamanager/Save_48.png"), workbenchPartSite->GetWorkbenchWindow());
-  m_UnknownDataNodeDescriptor->AddAction(saveAction, true);
-  m_DescriptorActionList.push_back(std::make_pair(m_UnknownDataNodeDescriptor, saveAction));
+  if (showSaveAction)
+  {
+    QAction *saveAction = new QmitkFileSaveAction(QIcon(":/org.mitk.gui.qt.datamanager/Save_48.png"),
+                                                  workbenchPartSite->GetWorkbenchWindow());
+    m_UnknownDataNodeDescriptor->AddAction(saveAction, true);
+    m_DescriptorActionList.push_back(std::make_pair(m_UnknownDataNodeDescriptor, saveAction));
+  }
 
   m_RemoveAction = new QmitkDataNodeRemoveAction(m_Parent, workbenchPartSite);
   m_RemoveAction->setIcon(QIcon(":/org.mitk.gui.qt.datamanager/Remove_48.png"));
@@ -168,9 +172,12 @@ void QmitkDataNodeContextMenu::InitDefaultActions()
     m_DescriptorActionList.push_back(std::make_pair(m_DiffusionImageDataNodeDescriptor, m_ComponentAction));
   }
 
-  m_TextureInterpolationAction = new QmitkDataNodeTextureInterpolationAction(m_Parent, workbenchPartSite);
-  m_ImageDataNodeDescriptor->AddAction(m_TextureInterpolationAction, false);
-  m_DescriptorActionList.push_back(std::make_pair(m_ImageDataNodeDescriptor, m_TextureInterpolationAction));
+  if (showTextInterpolationAction)
+  {
+    m_TextureInterpolationAction = new QmitkDataNodeTextureInterpolationAction(m_Parent, workbenchPartSite);
+    m_ImageDataNodeDescriptor->AddAction(m_TextureInterpolationAction, false);
+    m_DescriptorActionList.push_back(std::make_pair(m_ImageDataNodeDescriptor, m_TextureInterpolationAction));
+  }
 
   if (nullptr != m_DiffusionImageDataNodeDescriptor)
   {
