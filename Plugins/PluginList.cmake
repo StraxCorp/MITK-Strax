@@ -8,12 +8,12 @@ set(MITK_PLUGINS
   org.blueberry.core.commands:OFF
   org.blueberry.core.jobs:OFF
   org.blueberry.ui.qt:OFF
-  org.blueberry.ui.qt.help:ON
+  org.blueberry.ui.qt.help:OFF
   org.blueberry.ui.qt.log:ON
   org.blueberry.ui.qt.objectinspector:OFF
   org.mitk.core.services:ON
   org.mitk.gui.common:ON
-  org.mitk.planarfigure:ON
+  org.mitk.planarfigure:OFF
   org.mitk.core.ext:OFF
   org.mitk.core.jobs:OFF
   org.mitk.gui.qt.application:ON
@@ -29,7 +29,7 @@ set(MITK_PLUGINS
   org.mitk.gui.qt.datamanager:ON
   org.mitk.gui.qt.datamanagerlight:OFF
   org.mitk.gui.qt.datastorageviewertest:OFF
-  org.mitk.gui.qt.properties:ON
+  org.mitk.gui.qt.properties:OFF
   org.mitk.gui.qt.basicimageprocessing:OFF
   org.mitk.gui.qt.dicombrowser:OFF
   org.mitk.gui.qt.dicominspector:OFF
@@ -48,7 +48,8 @@ set(MITK_PLUGINS
   org.mitk.gui.qt.pointsetinteractionmultispectrum:OFF
   org.mitk.gui.qt.python:OFF
   org.mitk.gui.qt.remeshing:OFF
-  org.mitk.gui.qt.segmentation:OFF
+  # CustomUI: Enable segmenetation tool by default
+  org.mitk.gui.qt.segmentation:ON
   org.mitk.gui.qt.deformableclippingplane:OFF
   org.mitk.gui.qt.aicpregistration:OFF
   org.mitk.gui.qt.renderwindowmanager:OFF
@@ -65,7 +66,8 @@ set(MITK_PLUGINS
   org.mitk.gui.qt.classificationsegmentation:OFF
   org.mitk.gui.qt.overlaymanager:OFF
   org.mitk.gui.qt.igt.app.hummelprotocolmeasurements:OFF
-  org.mitk.gui.qt.multilabelsegmentation:OFF
+  # CustomUI: Enable segmenetation tool by default
+  org.mitk.gui.qt.multilabelsegmentation:ON
   org.mitk.matchpoint.core.helper:OFF
   org.mitk.gui.qt.matchpoint.algorithm.browser:OFF
   org.mitk.gui.qt.matchpoint.algorithm.control:OFF

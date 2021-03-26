@@ -4,5 +4,7 @@
 
 set(target_libraries
   org_blueberry_ui_qt
-  org_mitk_gui_qt_extapplication
+  # CustomUI: This plugin has been replaced by org_mitk_straxcorp_annotationapp
+  # org_mitk_gui_qt_extapplication
+  org_mitk_straxcorp_annotationapp
 )

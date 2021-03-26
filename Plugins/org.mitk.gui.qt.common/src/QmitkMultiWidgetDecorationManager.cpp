@@ -45,7 +45,7 @@ void QmitkMultiWidgetDecorationManager::DecorationPreferencesChanged(const berry
   // Disable the logo first, otherwise setting a new logo will have no effect due to how mitkManufacturerLogo works
   ShowLogo(false);
   SetupLogo(qPrintable(":/org.mitk.gui.qt.stdmultiwidgeteditor/defaultWatermark.png"));
-  ShowLogo(true);
+  ShowLogo(showLogo);
 
   const berry::IPreferences* currentNode = preferences;
   while (currentNode)
