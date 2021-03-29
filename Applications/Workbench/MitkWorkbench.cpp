@@ -40,7 +40,8 @@ int main(int argc, char **argv)
   app.setPreloadLibraries(QStringList() << library);
 #endif
 
-  app.setProperty(mitk::BaseApplication::PROP_PRODUCT, "org.mitk.gui.qt.extapplication.workbench");
+  // CustomUI: load annotation app workbench by default
+  app.setProperty(mitk::BaseApplication::PROP_PRODUCT, "org.mitk.straxcorp.annotationapp.workbench");
 
   // Run the workbench.
   return app.run();

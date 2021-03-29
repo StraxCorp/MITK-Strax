@@ -181,6 +181,7 @@ private:
   bool showSaveProjectAction = false;
   bool showCloseProjectAction = false;
   bool showEditorAction = false;
+  bool showHelp = false;
 };
 
 #endif /*QMITKEXTWORKBENCHWINDOWADVISOR_H_*/

@@ -135,6 +135,8 @@ private:
   QmitkAbstractMultiWidget* m_MultiWidget;
   mitk::LogoAnnotation::Pointer m_LogoAnnotation;
 
+  // CustomUI: Hide MITK|DKFZ
+  bool showLogo = false;
 };
 
 #endif // QMITKMULTIWIDGETDECORATIONMANAGER_H

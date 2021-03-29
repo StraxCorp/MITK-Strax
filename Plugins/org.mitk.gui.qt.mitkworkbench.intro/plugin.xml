@@ -6,7 +6,8 @@
       class="QmitkMitkWorkbenchIntroPart"
       role="editor"/>
     <introProductBinding
-      productId="org.mitk.gui.qt.extapplication.workbench"
+      <!-- CustomUI -->
+      productId="org.mitk.straxcorp.annotationapp.workbench"
       introId="org.mitk.qt.extapplicationintro"/>
   </extension>
 </plugin>
