@@ -130,7 +130,18 @@ void mitk::ToolManager::InitializeTools()
       tool->ErrorMessage += MessageDelegate1<mitk::ToolManager, std::string>(this, &ToolManager::OnToolErrorMessage);
       tool->GeneralMessage +=
         MessageDelegate1<mitk::ToolManager, std::string>(this, &ToolManager::OnGeneralToolMessage);
-      m_Tools.push_back(tool);
+
+      // CustomUI: disable some tools for the segmentation
+      auto name = tool->GetName();
+      auto found = false;
+      for (const auto i : disabledTools)
+      {
+        if (std::strcmp(name, i) == 0)
+          found = true;
+      }
+
+      if (!found)
+        m_Tools.push_back(tool);
     }
   }
 }

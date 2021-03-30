@@ -41,7 +41,7 @@ endif()
 # MITK Extension Feature
 #-----------------------------------------------------------------------------
 
-set(MITK_EXTENSION_DIRS "" CACHE STRING "")
+set(MITK_EXTENSION_DIRS "C:/MITKPlugins" CACHE STRING "")
 
 unset(MITK_ABSOLUTE_EXTENSION_DIRS)
 

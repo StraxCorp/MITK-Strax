@@ -11,7 +11,8 @@
       <description>Allows the segmentation of images using different tools.</description>
       <keywordReference id="org.mitk.views.segmentation.ViewKeyword"/>
     </view>
-    <view
+    <!-- CustomUI: We are not using this view -->
+    <!-- <view
       id="org.mitk.views.segmentationutilities"
       name="Segmentation Utilities"
       category="Segmentation"
@@ -19,7 +20,7 @@
       icon="resources/segmentation_utilities.svg" >
       <description>Edit segmentations using standard operations. </description>
       <keywordReference id="org.mitk.views.segmentationutilities.ViewKeyword"/>
-    </view>
+    </view> -->
   </extension>
 
   <extension point="org.blueberry.ui.preferencePages">
