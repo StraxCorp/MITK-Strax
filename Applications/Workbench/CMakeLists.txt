@@ -24,7 +24,7 @@ set(_exclude_plugins
 
 mitkFunctionCreateBlueBerryApplication(
   NAME MitkWorkbench
-  DESCRIPTION "MITK Workbench"
+  DESCRIPTION "Strax Annotation App"
   EXCLUDE_PLUGINS ${_exclude_plugins}
 )
 

@@ -883,7 +883,7 @@ function(fixup_bundle_item resolved_embedded_item exepath dirs)
       message(FATAL_ERROR "Command failed:\n ${msg}")
     endif()
   endif()
-  
+
 endfunction()
 
 
@@ -974,6 +974,23 @@ function(fixup_bundle app libs dirs)
   else()
     message(SEND_ERROR "error: fixup_bundle: not a valid bundle")
   endif()
+
+  message("Renaming executable file...")
+  message("MITKWorkbench executable path: ${app}")
+  get_filename_component(PARENT_DIR ${app} DIRECTORY)
+  message("MITKWorkbench executable parent path: ${PARENT_DIR}")
+  get_filename_component(StraxAnnotationApp_Path "${PARENT_DIR}/StraxAnnotationApp.exe" ABSOLUTE)
+  message("New StraxAnnotationApp executable path: ${StraxAnnotationApp_Path}")
+  message("Renaming file from ${app} to ${StraxAnnotationApp_Path}")
+  file(RENAME ${app} ${StraxAnnotationApp_Path})
+  message("Rename done")
+
+  message("Renaming provisioning file...")
+  get_filename_component(MITKWorkbenchProvisioning_Path "${PARENT_DIR}/MitkWorkbench.provisioning" ABSOLUTE)
+  get_filename_component(StraxAnnotationAppProvisioning_Path "${PARENT_DIR}/StraxAnnotationApp.provisioning" ABSOLUTE)
+  message("Renaming file from ${MITKWorkbenchProvisioning_Path} to ${StraxAnnotationAppProvisioning_Path}")
+  file(RENAME ${MITKWorkbenchProvisioning_Path} ${StraxAnnotationAppProvisioning_Path})
+  message("Rename done")
 
   message("fixup_bundle: done")
 endfunction()
