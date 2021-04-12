@@ -41,7 +41,7 @@ endif()
 # MITK Extension Feature
 #-----------------------------------------------------------------------------
 
-set(MITK_EXTENSION_DIRS "" CACHE STRING "")
+set(MITK_EXTENSION_DIRS "C:/MITKPlugins" CACHE STRING "")
 
 unset(MITK_ABSOLUTE_EXTENSION_DIRS)
 
@@ -1276,7 +1276,7 @@ foreach(mitk_app ${ALL_MITK_APPS})
       endif()
     endif()
   # add link to the list
-  list(APPEND CPACK_CREATE_DESKTOP_LINKS "${executable_name}")
+  list(APPEND CPACK_CREATE_DESKTOP_LINKS "StraxAnnotationApp")
   endif()
 endforeach()
 

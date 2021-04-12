@@ -1,7 +1,7 @@
 # Install MITK icon and logo
 
 MITK_INSTALL(FILES
-  "${MITK_SOURCE_DIR}/mitk.ico"
+  "${MITK_SOURCE_DIR}/annotation-app-logo-mini.ico"
   "${MITK_SOURCE_DIR}/mitk.bmp")
 
 # Helper vars

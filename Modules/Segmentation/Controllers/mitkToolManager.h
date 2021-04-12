@@ -295,6 +295,18 @@ namespace mitk
     unsigned long m_TimePointObserverTag = 0;
     /** Pointer to the observed time stepper*/
     WeakPointer<SliceNavigationController> m_CurrentTimeNavigationController;
+
+    // CustomUI
+  private:
+    std::list<char *> disabledTools = {"Region Growing",
+                                       "Live Wire",
+                                       "2D Fast Marching",
+                                       "Threshold",
+                                       "UL Threshold",
+                                       "Otsu",
+                                       "Fast Marching 3D",
+                                       "Region Growing 3D",
+                                       "Watershed"};
   };
 
 } // namespace

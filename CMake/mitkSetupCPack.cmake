@@ -44,9 +44,9 @@ endif()
 # include required mfc libraries
 include(InstallRequiredSystemLibraries)
 
-set(CPACK_PACKAGE_NAME "MITK")
+set(CPACK_PACKAGE_NAME "StraxAnnotationApp")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "The Medical Imaging Interaction Toolkit")
-set(CPACK_PACKAGE_VENDOR "German Cancer Research Center (DKFZ)")
+set(CPACK_PACKAGE_VENDOR "StraxCorp")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${MITK_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_LICENSE "${MITK_SOURCE_DIR}/LICENSE")
 

@@ -7,7 +7,8 @@ mitkFunctionAddExternalProject(NAME Eigen ON ADVANCED DOC "Use the Eigen library
 mitkFunctionAddExternalProject(NAME ANN ON ADVANCED DOC "Use Approximate Nearest Neighbor Library")
 mitkFunctionAddExternalProject(NAME CppUnit ON ADVANCED DOC "Use CppUnit for unit tests")
 mitkFunctionAddExternalProject(NAME HDF5 ON ADVANCED)
-mitkFunctionAddExternalProject(NAME OpenCV OFF)
+# We always need OpenCV for MITK
+mitkFunctionAddExternalProject(NAME OpenCV ON)
 mitkFunctionAddExternalProject(NAME Vigra OFF DEPENDS HDF5)
 mitkFunctionAddExternalProject(NAME ITK ON NO_CACHE DEPENDS HDF5)
 mitkFunctionAddExternalProject(NAME VTK ON NO_CACHE)

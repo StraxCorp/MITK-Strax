@@ -204,23 +204,24 @@ if(NOT _APP_NO_INSTALL)
     BlueBerryApplicationInstallHook(APP_NAME ${_APP_NAME} PLUGINS ${_real_app_plugins})
   endif()
 
-  # Install the executable
-  MITK_INSTALL_TARGETS(EXECUTABLES ${_APP_NAME} LIBRARY_DIRS ${_APP_LIBRARY_DIRS} GLOB_PLUGINS )
-
   if(NOT _APP_NO_PROVISIONING)
     # Install the provisioning file
     mitkFunctionInstallProvisioningFiles(${_prov_file})
   endif()
 
+  # We generate executeable after the provisioning file, so we can rename the provisioning file during the cleanup
+  # Install the executable
+  MITK_INSTALL_TARGETS(EXECUTABLES ${_APP_NAME} LIBRARY_DIRS ${_APP_LIBRARY_DIRS} GLOB_PLUGINS )
+
   # On Linux, create a shell script to start a relocatable application
   if(UNIX AND NOT APPLE)
     install(PROGRAMS "${MITK_SOURCE_DIR}/CMake/RunInstalledApp.sh" DESTINATION "." RENAME "${_APP_NAME}.sh")
   elseif(WIN32)
-    install(PROGRAMS "${MITK_SOURCE_DIR}/CMake/RunInstalledWin32App.bat" DESTINATION "." RENAME "${_APP_NAME}.bat")
+    install(PROGRAMS "${MITK_SOURCE_DIR}/CMake/RunInstalledWin32App.bat" DESTINATION "." RENAME "StraxAnnotationApp.bat")
   endif()
 
   # Tell cpack the executables that you want in the start menu as links
-  set(MITK_CPACK_PACKAGE_EXECUTABLES ${MITK_CPACK_PACKAGE_EXECUTABLES} "${_APP_NAME};${_APP_DESCRIPTION}" CACHE INTERNAL "Collecting windows shortcuts to executables")
+  set(MITK_CPACK_PACKAGE_EXECUTABLES ${MITK_CPACK_PACKAGE_EXECUTABLES} "StraxAnnotationApp;${_APP_DESCRIPTION}" CACHE INTERNAL "Collecting windows shortcuts to executables")
 
 endif()
 

@@ -9,7 +9,8 @@ set(MITK_PLUGINS
   org.blueberry.core.jobs:OFF
   org.blueberry.ui.qt:OFF
   org.blueberry.ui.qt.help:OFF
-  org.blueberry.ui.qt.log:ON
+  # CustomUI: We don't want to show end user logs as it contains API information
+  org.blueberry.ui.qt.log:OFF
   org.blueberry.ui.qt.objectinspector:OFF
   org.mitk.core.services:ON
   org.mitk.gui.common:ON
@@ -66,8 +67,7 @@ set(MITK_PLUGINS
   org.mitk.gui.qt.classificationsegmentation:OFF
   org.mitk.gui.qt.overlaymanager:OFF
   org.mitk.gui.qt.igt.app.hummelprotocolmeasurements:OFF
-  # CustomUI: Enable segmenetation tool by default
-  org.mitk.gui.qt.multilabelsegmentation:ON
+  org.mitk.gui.qt.multilabelsegmentation:OFF
   org.mitk.matchpoint.core.helper:OFF
   org.mitk.gui.qt.matchpoint.algorithm.browser:OFF
   org.mitk.gui.qt.matchpoint.algorithm.control:OFF
