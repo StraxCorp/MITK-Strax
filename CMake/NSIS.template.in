@@ -1,6 +1,11 @@
 ; CPack install script designed for a nmake build
 
 ;--------------------------------
+; Require admin permission
+RequestExecutionLevel admin
+!include LogicLib.nsh
+
+;--------------------------------
 ; You must define these values
 
   !define VERSION "@CPACK_PACKAGE_VERSION@"
@@ -964,6 +969,14 @@ SectionEnd
 ; "Program Files" for AllUsers, "My Documents" for JustMe...
 
 Function .onInit
+  UserInfo::GetAccountType
+  pop $0
+  ${If} $0 != "admin" ;Require admin rights on NT4+
+      MessageBox mb_iconstop "Administrator rights required! Please right click the installer and select the 'Run as administrator'"
+      SetErrorLevel 740 ;ERROR_ELEVATION_REQUIRED
+      Quit
+  ${EndIf}
+
   ; Reads components status for registry
   !insertmacro SectionList "InitSection"
 
