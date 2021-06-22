@@ -9,6 +9,10 @@ if(CPACK_GENERATOR MATCHES "NSIS")
   set(CPACK_NSIS_MUI_UNIICON "@MITK_SOURCE_DIR@\\annotation-app-logo-mini.ico")
 
   set(CPACK_NSIS_DISPLAY_NAME "StraxAnnotationApp")
+  set(CPACK_PACKAGE_INSTALL_DIRECTORY "StraxAnnotationApp")
+  set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY "StraxAnnotationApp")
+  set(CPACK_NSIS_PACKAGE_NAME "StraxAnnotationApp")
+  set(CPACK_PACKAGE_VERSION "v0.6.2")
 
   # tell cpack to create links to the doc files
   set(CPACK_NSIS_MENU_LINKS

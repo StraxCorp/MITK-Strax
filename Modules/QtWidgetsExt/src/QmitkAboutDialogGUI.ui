@@ -54,7 +54,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Annotation App Version: v0.6.1</string>
+          <string>Annotation App Version: v0.6.2</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
