@@ -432,7 +432,8 @@ QmitkExtWorkbenchWindowAdvisor::QmitkExtWorkbenchWindowAdvisor(berry::WorkbenchA
   , showMitkVersionInfo(true)
   , showViewMenuItem(true)
   , showNewWindowMenuItem(false)
-  , showClosePerspectiveMenuItem(true)
+  , showOpenPerspectiveMenuItem(false)
+  , showClosePerspectiveMenuItem(false)
   , viewNavigatorFound(false)
   , showMemoryIndicator(true)
   , dropTargetListener(new QmitkDefaultDropTargetListener)
@@ -468,6 +469,11 @@ QWidget* QmitkExtWorkbenchWindowAdvisor::CreateEmptyWindowContents(QWidget* pare
   label->setEnabled(false);
   parentWidget->layout()->addWidget(label);
   return label;
+}
+
+void QmitkExtWorkbenchWindowAdvisor::ShowOpenPerspectiveMenuItem(bool show)
+{
+  showOpenPerspectiveMenuItem = show;
 }
 
 void QmitkExtWorkbenchWindowAdvisor::ShowClosePerspectiveMenuItem(bool show)
@@ -658,7 +664,9 @@ void QmitkExtWorkbenchWindowAdvisor::PostWindowCreate()
       windowMenu->addSeparator();
     }
 
-    QMenu* perspMenu = windowMenu->addMenu("&Open Perspective");
+    QMenu* perspMenu = nullptr;
+    if(showOpenPerspectiveMenuItem)
+      perspMenu = windowMenu->addMenu("&Open Perspective");
 
     QMenu* viewMenu = nullptr;
     if (showViewMenuItem)
@@ -715,7 +723,8 @@ void QmitkExtWorkbenchWindowAdvisor::PostWindowCreate()
       QAction* perspAction = new berry::QtOpenPerspectiveAction(window, *perspIt, perspGroup);
       mapPerspIdToAction.insert((*perspIt)->GetId(), perspAction);
     }
-    perspMenu->addActions(perspGroup->actions());
+    if(showOpenPerspectiveMenuItem)
+      perspMenu->addActions(perspGroup->actions());
 
     if (showViewMenuItem)
     {

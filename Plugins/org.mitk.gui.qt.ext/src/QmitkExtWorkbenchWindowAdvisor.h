@@ -64,6 +64,8 @@ public:
 
     void ShowNewWindowMenuItem(bool show);
 
+    void ShowOpenPerspectiveMenuItem(bool show);
+
     void ShowClosePerspectiveMenuItem(bool show);
 
     bool GetShowClosePerspectiveMenuItem();
@@ -141,6 +143,7 @@ private:
   bool showMitkVersionInfo;
   bool showViewMenuItem;
   bool showNewWindowMenuItem;
+  bool showOpenPerspectiveMenuItem;
   bool showClosePerspectiveMenuItem;
   bool viewNavigatorFound;
   bool showMemoryIndicator;
