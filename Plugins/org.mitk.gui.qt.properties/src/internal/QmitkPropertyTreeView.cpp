@@ -46,11 +46,11 @@ void QmitkPropertyTreeView::SetFocus()
   m_Controls.filterLineEdit->setFocus();
 }
 
-void QmitkPropertyTreeView::RenderWindowPartActivated(mitk::IRenderWindowPart* /*renderWindowPart*/)
+void QmitkPropertyTreeView::RenderWindowPartActivated(mitk::IRenderWindowPart* renderWindowPart)
 {
   if (m_Controls.propertyListComboBox->count() == 2)
   {
-    QHash<QString, QmitkRenderWindow*> renderWindows = this->GetRenderWindowPart()->GetQmitkRenderWindows();
+    QHash<QString, QmitkRenderWindow*> renderWindows = renderWindowPart->GetQmitkRenderWindows();
 
     Q_FOREACH(QString renderWindow, renderWindows.keys())
     {
@@ -104,6 +104,7 @@ void QmitkPropertyTreeView::CreateQtPartControl(QWidget* parent)
 
   m_Controls.singleSlot->SetDataStorage(GetDataStorage());
   m_Controls.singleSlot->SetSelectionIsOptional(true);
+  m_Controls.singleSlot->SetAutoSelectNewNodes(true);
   m_Controls.singleSlot->SetEmptyInfo(QString("Please select a data node"));
   m_Controls.singleSlot->SetPopUpTitel(QString("Select data node"));
 
@@ -325,9 +326,15 @@ void QmitkPropertyTreeView::OnPropertyListChanged(int index)
   if (renderer.startsWith("Data node: "))
     renderer = QString::fromStdString(renderer.toStdString().substr(11));
 
-  m_Renderer = renderer != "common" && renderer != "Base data"
-    ? this->GetRenderWindowPart()->GetQmitkRenderWindow(renderer)->GetRenderer()
-    : nullptr;
+  m_Renderer = nullptr;
+
+  if (renderer != "common" && renderer != "Base data")
+  {
+    auto* renderWindowPart = this->GetRenderWindowPart();
+
+    if (nullptr != renderWindowPart)
+      m_Renderer = renderWindowPart->GetQmitkRenderWindow(renderer)->GetRenderer();
+  }
 
   QList<mitk::DataNode::Pointer> nodes;
 

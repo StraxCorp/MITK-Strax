@@ -367,7 +367,7 @@ void mitk::SegTool2D::Activated()
 {
   Superclass::Activated();
 
-  m_ToolManager->SelectedTimePointChanged +=
+  this->GetToolManager()->SelectedTimePointChanged +=
     mitk::MessageDelegate<mitk::SegTool2D>(this, &mitk::SegTool2D::OnTimePointChangedInternal);
 
   m_LastTimePointTriggered = mitk::RenderingManager::GetInstance()->GetTimeNavigationController()->GetSelectedTimePoint();
@@ -375,7 +375,7 @@ void mitk::SegTool2D::Activated()
 
 void mitk::SegTool2D::Deactivated()
 {
-  m_ToolManager->SelectedTimePointChanged -=
+  this->GetToolManager()->SelectedTimePointChanged -=
     mitk::MessageDelegate<mitk::SegTool2D>(this, &mitk::SegTool2D::OnTimePointChangedInternal);
   Superclass::Deactivated();
 }
@@ -401,9 +401,9 @@ void mitk::SegTool2D::OnTimePointChanged()
 
 mitk::DataNode* mitk::SegTool2D::GetWorkingDataNode() const
 {
-  if (nullptr != m_ToolManager)
+  if (nullptr != this->GetToolManager())
   {
-    return m_ToolManager->GetWorkingData(0);
+    return this->GetToolManager()->GetWorkingData(0);
   }
   return nullptr;
 }
@@ -420,9 +420,9 @@ mitk::Image* mitk::SegTool2D::GetWorkingData() const
 
 mitk::DataNode* mitk::SegTool2D::GetReferenceDataNode() const
 {
-  if (nullptr != m_ToolManager)
+  if (nullptr != this->GetToolManager())
   {
-    return m_ToolManager->GetReferenceData(0);
+    return this->GetToolManager()->GetReferenceData(0);
   }
   return nullptr;
 }
@@ -684,7 +684,7 @@ int mitk::SegTool2D::AddContourmarker(const PlaneGeometry* planeGeometry, unsign
   {
     if (id == size)
     {
-      m_ToolManager->GetDataStorage()->Add(rotatedContourNode, workingNode);
+      this->GetToolManager()->GetDataStorage()->Add(rotatedContourNode, workingNode);
     }
     else
     {
@@ -692,7 +692,7 @@ int mitk::SegTool2D::AddContourmarker(const PlaneGeometry* planeGeometry, unsign
         mitk::NodePredicateProperty::New("isContourMarker", mitk::BoolProperty::New(true));
 
       mitk::DataStorage::SetOfObjects::ConstPointer markers =
-        m_ToolManager->GetDataStorage()->GetDerivations(workingNode, isMarker);
+        this->GetToolManager()->GetDataStorage()->GetDerivations(workingNode, isMarker);
 
       for (auto iter = markers->begin(); iter != markers->end(); ++iter)
       {
@@ -704,7 +704,7 @@ int mitk::SegTool2D::AddContourmarker(const PlaneGeometry* planeGeometry, unsign
           return id;
         }
       }
-      m_ToolManager->GetDataStorage()->Add(rotatedContourNode, workingNode);
+      this->GetToolManager()->GetDataStorage()->Add(rotatedContourNode, workingNode);
     }
   }
   return id;
@@ -730,83 +730,6 @@ void mitk::SegTool2D::InteractiveSegmentationBugMessage(const std::string &messa
              << "  - What happened (not)? What did you expect?" << std::endl;
 }
 
-template <typename TPixel, unsigned int VImageDimension>
-void InternalWritePreviewOnWorkingImage(itk::Image<TPixel, VImageDimension> *targetSlice,
-                                        const mitk::Image *sourceSlice,
-                                        mitk::Image *originalImage,
-                                        int overwritevalue)
-{
-  typedef itk::Image<TPixel, VImageDimension> SliceType;
-
-  typename SliceType::Pointer sourceSliceITK;
-  CastToItkImage(sourceSlice, sourceSliceITK);
-
-  // now the original slice and the ipSegmentation-painted slice are in the same format, and we can just copy all pixels
-  // that are non-zero
-  typedef itk::ImageRegionIterator<SliceType> OutputIteratorType;
-  typedef itk::ImageRegionConstIterator<SliceType> InputIteratorType;
-
-  InputIteratorType inputIterator(sourceSliceITK, sourceSliceITK->GetLargestPossibleRegion());
-  OutputIteratorType outputIterator(targetSlice, targetSlice->GetLargestPossibleRegion());
-
-  outputIterator.GoToBegin();
-  inputIterator.GoToBegin();
-
-  auto *workingImage = dynamic_cast<mitk::LabelSetImage *>(originalImage);
-  assert(workingImage);
-
-  int activePixelValue = workingImage->GetActiveLabel()->GetValue();
-
-  if (activePixelValue == 0) // if exterior is the active label
-  {
-    while (!outputIterator.IsAtEnd())
-    {
-      if (inputIterator.Get() != 0)
-      {
-        outputIterator.Set(overwritevalue);
-      }
-      ++outputIterator;
-      ++inputIterator;
-    }
-  }
-  else if (overwritevalue != 0) // if we are not erasing
-  {
-    while (!outputIterator.IsAtEnd())
-    {
-      auto targetValue = static_cast<int>(outputIterator.Get());
-      if (inputIterator.Get() != 0)
-      {
-        if (!workingImage->GetLabel(targetValue)->GetLocked())
-        {
-          outputIterator.Set(overwritevalue);
-        }
-      }
-      if (targetValue == overwritevalue)
-      {
-        outputIterator.Set(inputIterator.Get());
-      }
-
-      ++outputIterator;
-      ++inputIterator;
-    }
-  }
-  else // if we are erasing
-  {
-    while (!outputIterator.IsAtEnd())
-    {
-      const int targetValue = outputIterator.Get();
-      if (inputIterator.Get() != 0)
-      {
-        if (targetValue == activePixelValue)
-          outputIterator.Set(overwritevalue);
-      }
-
-      ++outputIterator;
-      ++inputIterator;
-    }
-  }
-}
-
 void mitk::SegTool2D::WritePreviewOnWorkingImage(
   Image *targetSlice, const Image *sourceSlice, const Image *workingImage, int paintingPixelValue)
 {
@@ -830,5 +753,5 @@ void mitk::SegTool2D::WritePreviewOnWorkingImage(
    (or I am not experienced enough to use it correctly)*/
   auto nonConstVtkSource = const_cast<vtkImageData*>(constVtkSource);
 
-  ContourModelUtils::FillSliceInSlice(nonConstVtkSource, targetSlice->GetVtkImageData(), workingImage, paintingPixelValue);
+  ContourModelUtils::FillSliceInSlice(nonConstVtkSource, targetSlice->GetVtkImageData(), workingImage, paintingPixelValue, 1.0);
 }
