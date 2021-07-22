@@ -299,7 +299,6 @@ namespace mitk
     // CustomUI
   private:
     std::list<char *> disabledTools = {"Region Growing",
-                                       "Live Wire",
                                        "2D Fast Marching",
                                        "Threshold",
                                        "UL Threshold",
